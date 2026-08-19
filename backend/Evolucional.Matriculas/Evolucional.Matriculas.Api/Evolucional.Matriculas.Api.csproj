@@ -144,6 +144,7 @@
     <Compile Include="DTOs\Matriculas\CriarMatriculaDto.cs" />
     <Compile Include="DTOs\Relatorios\AlunosPorTurmaDto.cs" />
     <Compile Include="DTOs\Turmas\TurmaDto.cs" />
+    <Compile Include="Exceptions\InvalidBirthDateException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AlunosController.cs" />
     <Compile Include="DTOs\Alunos\AlunoDto.cs" />
     <Compile Include="DTOs\Alunos\AtualizarAlunoDto.cs" />
     <Compile Include="DTOs\Alunos\CriarAlunosDto.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AlunoRepository.cs" />
     <Compile Include="Repositories\Interfaces\IAlunoRepository.cs" />
+    <Compile Include="Services\AlunoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -164,10 +166,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

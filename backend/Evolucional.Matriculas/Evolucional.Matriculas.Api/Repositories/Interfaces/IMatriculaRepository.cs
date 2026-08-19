@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace Evolucional.Matriculas.Api.Repositories.Interfaces
 {
-    public interface ITurmaRepository
+    public interface IMatriculaRepository
     {
-        Task<IEnumerable<Turma>> GetAllAsync();
-        Task<Turma> GetByIdAsync(int id);
+        Task<bool> ExistsAsync (int alunoId, int turmaId);
+        Task<Matricula> CreateAsync(int alunoId, int turmaId);
+
     }
 }

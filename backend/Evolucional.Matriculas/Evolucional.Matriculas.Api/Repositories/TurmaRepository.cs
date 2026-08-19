@@ -37,5 +37,25 @@ namespace Evolucional.Matriculas.Api.Repositories
             }
         }
 
+        public async Task<Turma> GetByIdAsync(int id)
+        {
+            const string sql = @"
+                                SELECT
+                                    Id,
+                                    Nome,
+                                    Periodo,
+                                    VagasTotal,
+                                    VagasDisponiveis
+                                FROM Turma
+                                WHERE Id = @Id;";
+
+            using (var connection = _connectionFactory.CreateConnection())
+            {
+                return await connection.QuerySingleOrDefaultAsync<Turma>(
+                    sql,
+                    new { Id = id });
+            }
+        }
+
     }
 }

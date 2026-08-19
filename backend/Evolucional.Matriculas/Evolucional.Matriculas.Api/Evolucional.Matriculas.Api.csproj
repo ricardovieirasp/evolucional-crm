@@ -136,6 +136,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="DTOs\Alunos\AlunoDto.cs" />
+    <Compile Include="DTOs\Alunos\AtualizarAlunoDto.cs" />
+    <Compile Include="DTOs\Alunos\CriarAlunosDto.cs" />
+    <Compile Include="DTOs\Common\PagedResultDto.cs" />
+    <Compile Include="DTOs\Matriculas\CriarMatriculaDto.cs" />
+    <Compile Include="DTOs\Relatorios\AlunosPorTurmaDto.cs" />
+    <Compile Include="DTOs\Turmas\TurmaDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -157,7 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Repositories\Interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>

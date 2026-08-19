@@ -137,6 +137,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlunosController.cs" />
+    <Compile Include="Controllers\TurmasController.cs" />
     <Compile Include="DTOs\Alunos\AlunoDto.cs" />
     <Compile Include="DTOs\Alunos\AtualizarAlunoDto.cs" />
     <Compile Include="DTOs\Alunos\CriarAlunosDto.cs" />
@@ -155,7 +156,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AlunoRepository.cs" />
     <Compile Include="Repositories\Interfaces\IAlunoRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ITurmaRepository.cs" />
+    <Compile Include="Repositories\TurmaRepository.cs" />
     <Compile Include="Services\AlunoService.cs" />
+    <Compile Include="Services\TurmaService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

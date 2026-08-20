@@ -8,7 +8,7 @@ namespace Evolucional.Matriculas.Api.DTOs.Relatorios
     public class AlunosPorTurmaDto
     {
         public string NomeTurma { get; set; }
-        public string QuantidadedeAlunos { get; set; }
+        public string QuantidadeAlunos { get; set; }
         public string VagasRestantes { get; set; }
     }
 }

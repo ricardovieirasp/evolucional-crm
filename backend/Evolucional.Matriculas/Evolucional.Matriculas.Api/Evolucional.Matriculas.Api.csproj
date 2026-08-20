@@ -138,6 +138,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlunosController.cs" />
     <Compile Include="Controllers\MatriculasController.cs" />
+    <Compile Include="Controllers\RelatoriosController.cs" />
     <Compile Include="Controllers\TurmasController.cs" />
     <Compile Include="DTOs\Alunos\AlunoDto.cs" />
     <Compile Include="DTOs\Alunos\AtualizarAlunoDto.cs" />
@@ -161,11 +162,14 @@
     <Compile Include="Repositories\AlunoRepository.cs" />
     <Compile Include="Repositories\Interfaces\IAlunoRepository.cs" />
     <Compile Include="Repositories\Interfaces\IMatriculaRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IRelatorioRepository.cs" />
     <Compile Include="Repositories\Interfaces\ITurmaRepository.cs" />
     <Compile Include="Repositories\MatriculaRepository.cs" />
+    <Compile Include="Repositories\RelatorioRepository.cs" />
     <Compile Include="Repositories\TurmaRepository.cs" />
     <Compile Include="Services\AlunoService.cs" />
     <Compile Include="Services\MatriculaService.cs" />
+    <Compile Include="Services\RelatorioService.cs" />
     <Compile Include="Services\TurmaService.cs" />
   </ItemGroup>
   <ItemGroup>

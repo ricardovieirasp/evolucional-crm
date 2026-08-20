@@ -71,11 +71,11 @@ Configure a connection string no `Web.config` de acordo com sua
 instância do SQL Server.
 
 ``` xml
-	<connectionStrings>
-		<add name="TesteEscola" 
-			 connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TesteEscola;Integrated Security=True"
-			 providerName="System.Data.SqlClient" />
-	</connectionStrings>
+    <connectionStrings>
+        <add name="TesteEscola" 
+             connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TesteEscola;Integrated Security=True"
+             providerName="System.Data.SqlClient" />
+    </connectionStrings>
 ```
 
 ## Como executar
@@ -247,9 +247,120 @@ vagas para um valor negativo.
 
 ## Itens bônus
 
-Implementado:
+Foram implementados os seguintes itens bônus:
 
--   testes unitários das regras de matrícula com MSTest e Moq.
+-   Cache da listagem de turmas, abstraído através de `ICacheService` e
+    implementado em memória com `MemoryCache`.
+-   Testes unitários das principais regras de matrícula utilizando
+    MSTest e Moq, incluindo cenário de concorrência no consumo da última
+    vaga.
+-   Tela simples em HTML, CSS e jQuery para consulta de alunos,
+    consumindo a própria API REST, com busca por nome, paginação, total
+    de registros e indicação de status do aluno.
+
+### Cache de turmas
+
+A listagem de turmas utiliza cache através da abstração `ICacheService`.
+
+Neste projeto foi utilizada uma implementação em memória com
+`MemoryCache`. Essa decisão mantém as regras de negócio desacopladas da
+tecnologia utilizada para armazenamento do cache.
+
+O fluxo funciona da seguinte forma:
+
+1.  A API consulta o cache utilizando a chave da listagem de turmas.
+2.  Se os dados estiverem no cache, eles são retornados sem uma nova
+    consulta ao SQL Server.
+3.  Se os dados não estiverem no cache, a listagem é consultada no banco
+    e armazenada temporariamente no cache.
+4.  Após uma matrícula ser criada com sucesso, o cache de turmas é
+    invalidado, pois a quantidade de vagas disponíveis foi alterada.
+5.  Na consulta seguinte, os dados atualizados são novamente carregados
+    do SQL Server e armazenados no cache.
+
+A invalidação após a matrícula evita que a API apresente uma quantidade
+de vagas desatualizada.
+
+#### Como seria a implementação com Redis
+
+A aplicação depende da interface `ICacheService`, e não diretamente de
+`MemoryCache`. Dessa forma, uma implementação Redis poderia ser
+adicionada sem alterar as regras existentes no `TurmaService` ou no
+`MatriculaService`.
+
+A estrutura poderia ficar assim:
+
+``` text
+ICacheService
+    ├── MemoryCacheService
+    └── RedisCacheService
+```
+
+A implementação `RedisCacheService` poderia utilizar a biblioteca
+`StackExchange.Redis` para comunicação com o servidor Redis.
+
+Exemplo conceitual:
+
+``` csharp
+public class RedisCacheService : ICacheService
+{
+    private readonly IDatabase _database;
+
+    public RedisCacheService(IConnectionMultiplexer redis)
+    {
+        _database = redis.GetDatabase();
+    }
+
+    public T Get<T>(string key)
+    {
+        var value = _database.StringGet(key);
+
+        if (value.IsNullOrEmpty)
+            return default(T);
+
+        return JsonConvert.DeserializeObject<T>(value);
+    }
+
+    public void Set<T>(string key, T value, TimeSpan expiration)
+    {
+        var json = JsonConvert.SerializeObject(value);
+
+        _database.StringSet(
+            key,
+            json,
+            expiration);
+    }
+
+    public void Remove(string key)
+    {
+        _database.KeyDelete(key);
+    }
+}
+```
+
+Com essa abordagem, a troca de `MemoryCacheService` por
+`RedisCacheService` fica restrita à configuração da
+infraestrutura/injeção da implementação.
+
+Em um ambiente com múltiplas instâncias da API, Redis também permitiria
+compartilhar o cache entre todas as instâncias, enquanto `MemoryCache`
+mantém os dados apenas na memória do processo em que a aplicação está
+executando.
+
+### Dashboard HTML/jQuery
+
+A aplicação também possui uma tela simples de consulta de alunos
+disponível na raiz da aplicação através do arquivo `index.html`.
+
+A tela utiliza HTML, CSS e jQuery e consome o endpoint
+`GET /api/alunos`, incluindo:
+
+-   paginação utilizando a própria API;
+-   busca por nome;
+-   total de registros;
+-   formatação da data de nascimento;
+-   indicação visual de alunos ativos e inativos;
+-   estados de carregamento, erro e resultado vazio.
 
 ## Autor
 

@@ -1,5 +1,6 @@
 ﻿using Evolucional.Matriculas.Api.DTOs.Matriculas;
 using Evolucional.Matriculas.Api.Exceptions;
+using Evolucional.Matriculas.Api.Infrastructure.Cache;
 using Evolucional.Matriculas.Api.Models;
 using Evolucional.Matriculas.Api.Repositories.Interfaces;
 using Evolucional.Matriculas.Api.Services;
@@ -21,6 +22,7 @@ namespace Evolucional.Matriculas.Tests
             var alunoRepositoryMock = new Mock<IAlunoRepository>();
             var turmaRepositoryMock = new Mock<ITurmaRepository>();
             var matriculaRepositoryMock = new Mock<IMatriculaRepository>();
+            var cacheServiceMock = new Mock<ICacheService>();
 
             alunoRepositoryMock
                 .Setup(repo => repo.GetByIdAsync(1))
@@ -45,7 +47,8 @@ namespace Evolucional.Matriculas.Tests
             var service = new MatriculaService(
                 matriculaRepositoryMock.Object, 
                 alunoRepositoryMock.Object,
-                turmaRepositoryMock.Object);
+                turmaRepositoryMock.Object,
+                cacheServiceMock.Object);
 
             var dto = new CriarMatriculaDto
             {
@@ -66,6 +69,8 @@ namespace Evolucional.Matriculas.Tests
             var alunoRepositoryMock = new Mock<IAlunoRepository>();
             var turmaRepositoryMock = new Mock<ITurmaRepository>();
             var matriculaRepositoryMock = new Mock<IMatriculaRepository>();
+            var cacheServiceMock = new Mock<ICacheService>();
+
 
             alunoRepositoryMock
                 .Setup(repo => repo.GetByIdAsync(1))
@@ -90,7 +95,8 @@ namespace Evolucional.Matriculas.Tests
             var service = new MatriculaService(
                 matriculaRepositoryMock.Object,
                 alunoRepositoryMock.Object,
-                turmaRepositoryMock.Object);
+                turmaRepositoryMock.Object,
+                cacheServiceMock.Object);
 
             var dto = new CriarMatriculaDto
             {
@@ -110,6 +116,7 @@ namespace Evolucional.Matriculas.Tests
             var alunoRepositoryMock = new Mock<IAlunoRepository>();
             var turmaRepositoryMock = new Mock<ITurmaRepository>();
             var matriculaRepositoryMock = new Mock<IMatriculaRepository>();
+            var cacheServiceMock = new Mock<ICacheService>();
 
             alunoRepositoryMock
                 .Setup(repo => repo.GetByIdAsync(1))
@@ -138,7 +145,8 @@ namespace Evolucional.Matriculas.Tests
             var service = new MatriculaService(
                 matriculaRepositoryMock.Object,
                 alunoRepositoryMock.Object,
-                turmaRepositoryMock.Object);
+                turmaRepositoryMock.Object,
+                cacheServiceMock.Object);
 
             var dto = new CriarMatriculaDto
             {
@@ -171,6 +179,8 @@ namespace Evolucional.Matriculas.Tests
             var alunoRepositoryMock = new Mock<IAlunoRepository>();
             var turmaRepositoryMock = new Mock<ITurmaRepository>();
             var matriculaRepositoryMock = new Mock<IMatriculaRepository>();
+            var cacheServiceMock = new Mock<ICacheService>();
+
 
             alunoRepositoryMock
                 .Setup(repo => repo.GetByIdAsync(1))
@@ -207,7 +217,8 @@ namespace Evolucional.Matriculas.Tests
             var service = new MatriculaService(
                 matriculaRepositoryMock.Object,
                 alunoRepositoryMock.Object,
-                turmaRepositoryMock.Object);
+                turmaRepositoryMock.Object,
+                cacheServiceMock.Object);
 
             var dto = new CriarMatriculaDto
             {
@@ -232,6 +243,10 @@ namespace Evolucional.Matriculas.Tests
             matriculaRepositoryMock.Verify(
                 repo => repo.CreateAsync(1, 1),
                 Times.Once);
+
+            cacheServiceMock.Verify(
+                cache => cache.Remove("turmas"),
+                Times.Once);
         }
 
         [TestMethod]
@@ -241,6 +256,8 @@ namespace Evolucional.Matriculas.Tests
             var alunoRepositoryMock = new Mock<IAlunoRepository>();
             var turmaRepositoryMock = new Mock<ITurmaRepository>();
             var matriculaRepositoryMock = new Mock<IMatriculaRepository>();
+            var cacheServiceMock = new Mock<ICacheService>();
+
 
             alunoRepositoryMock
                 .Setup(repo => repo.GetByIdAsync(1))
@@ -271,7 +288,8 @@ namespace Evolucional.Matriculas.Tests
             var service = new MatriculaService(
                 matriculaRepositoryMock.Object,
                 alunoRepositoryMock.Object,
-                turmaRepositoryMock.Object);
+                turmaRepositoryMock.Object,
+                cacheServiceMock.Object);
 
             var dto = new CriarMatriculaDto
             {

@@ -1,5 +1,6 @@
 ﻿using Evolucional.Matriculas.Api.DTOs.Matriculas;
 using Evolucional.Matriculas.Api.Exceptions;
+using Evolucional.Matriculas.Api.Infrastructure.Cache;
 using Evolucional.Matriculas.Api.Models;
 using Evolucional.Matriculas.Api.Repositories.Interfaces;
 using System;
@@ -16,12 +17,17 @@ namespace Evolucional.Matriculas.Api.Services
         private readonly IAlunoRepository _alunoRepository;
         private readonly ITurmaRepository _turmaRepository;
 
+        private const string TurmasCacheKey = "turmas";
+
+        private readonly ICacheService _cacheService;
+
         public MatriculaService(IMatriculaRepository matriculaRepository, 
-            IAlunoRepository alunoRepository, ITurmaRepository turmaRepository)
+            IAlunoRepository alunoRepository, ITurmaRepository turmaRepository, ICacheService cacheService)
         {
             _matriculaRepository = matriculaRepository;
             _alunoRepository = alunoRepository;
             _turmaRepository = turmaRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<Matricula> CreateAsync(CriarMatriculaDto dto)
@@ -52,6 +58,8 @@ namespace Evolucional.Matriculas.Api.Services
 
             if (matricula == null)
                 throw new TurmaSemVagaException();
+
+            _cacheService.Remove(TurmasCacheKey);
 
             return matricula;
 

@@ -1,4 +1,5 @@
 ﻿using Evolucional.Matriculas.Api.DTOs.Turmas;
+using Evolucional.Matriculas.Api.Infrastructure.Cache;
 using Evolucional.Matriculas.Api.Models;
 using Evolucional.Matriculas.Api.Repositories.Interfaces;
 using System;
@@ -13,16 +14,29 @@ namespace Evolucional.Matriculas.Api.Services
     {
         private readonly ITurmaRepository _turmaRepository;
 
-        public TurmaService(ITurmaRepository turmaRepository)
+        private const string TurmasCacheKey = "turmas";
+        private readonly ICacheService _cacheService;
+
+        public TurmaService(ITurmaRepository turmaRepository, ICacheService cacheService)
         {
             _turmaRepository = turmaRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<IEnumerable<TurmaDto>> GetAllAsync()
         {
-            var turmas = await _turmaRepository.GetAllAsync();
-            return turmas.Select(MapToDto);
+            var cached = _cacheService.Get<IEnumerable<TurmaDto>>(TurmasCacheKey);
 
+            if (cached != null)
+                return cached;
+
+            var turmas = await _turmaRepository.GetAllAsync();
+            
+            var resultado = turmas.Select(MapToDto).ToList();
+
+            _cacheService.Set(TurmasCacheKey, resultado, TimeSpan.FromMinutes(10));
+
+            return resultado;
         }
 
         private static TurmaDto MapToDto(Turma turma)

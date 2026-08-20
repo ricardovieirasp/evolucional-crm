@@ -1,6 +1,7 @@
 ﻿using Evolucional.Matriculas.Api.DTOs.Matriculas;
 using Evolucional.Matriculas.Api.Exceptions;
 using Evolucional.Matriculas.Api.Infrastructure;
+using Evolucional.Matriculas.Api.Infrastructure.Cache;
 using Evolucional.Matriculas.Api.Repositories;
 using Evolucional.Matriculas.Api.Services;
 using System;
@@ -23,11 +24,13 @@ namespace Evolucional.Matriculas.Api.Controllers
             var matriculaRepository = new MatriculaRepository(connectionFactory);
             var alunoRepository = new AlunoRepository(connectionFactory);
             var turmaRepository = new TurmaRepository(connectionFactory);
+            var cacheService = new MemoryCacheService();
 
             _matriculaService = new MatriculaService(
                 matriculaRepository,
                 alunoRepository,
-                turmaRepository
+                turmaRepository,
+                cacheService
             );
         }
 

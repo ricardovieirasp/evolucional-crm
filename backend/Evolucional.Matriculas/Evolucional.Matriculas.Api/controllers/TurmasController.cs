@@ -1,4 +1,5 @@
 ﻿using Evolucional.Matriculas.Api.Infrastructure;
+using Evolucional.Matriculas.Api.Infrastructure.Cache;
 using Evolucional.Matriculas.Api.Repositories;
 using Evolucional.Matriculas.Api.Services;
 using System;
@@ -18,7 +19,9 @@ namespace Evolucional.Matriculas.Api.Controllers
         public TurmasController() {
             var connectionFactory = new SqlConnectionFactory();
             var turmaREpository = new TurmaRepository(connectionFactory);
-            _turmaService = new TurmaService(turmaREpository);
+            var cacheService = new MemoryCacheService();
+
+            _turmaService = new TurmaService(turmaREpository, cacheService);
         }
 
         [HttpGet]

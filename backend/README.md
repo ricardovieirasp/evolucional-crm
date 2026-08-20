@@ -90,7 +90,7 @@ instância do SQL Server.
 ### Passos
 
 1.  Clone o repositório.
-2.  Execute o `script-banco.sql` no SQL Server.
+2.  Execute o `database\script-banco.sql` no SQL Server.
 3.  Configure a connection string no `Web.config`.
 4.  Abra `Evolucional.Matriculas.sln`.
 5.  Restaure os pacotes NuGet.

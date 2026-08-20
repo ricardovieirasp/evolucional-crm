@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Evolucional | Matrículas</title>
+
+    <link rel="stylesheet" href="/Content/dashboard.css" />
+</head>
+
+<body>
+
+    <header class="header">
+        <div>
+            <h1>Evolucional</h1>
+            <span>Controle de Matrículas</span>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="page-header">
+            <div>
+                <h2>Alunos</h2>
+                <p>Consulte os alunos cadastrados na escola.</p>
+            </div>
+
+            <div class="total-card">
+                <span>Total de alunos</span>
+                <strong id="totalAlunos">-</strong>
+            </div>
+        </section>
+
+        <section class="card">
+
+            <div class="filters">
+                <input type="text"
+                       id="filtroNome"
+                       placeholder="Buscar aluno por nome..." />
+
+                <button type="button" id="btnBuscar">
+                    Buscar
+                </button>
+
+                <button type="button" id="btnLimpar">
+                    Limpar
+                </button>
+            </div>
+
+            <div id="loading" class="message">
+                Carregando alunos...
+            </div>
+
+            <div id="error" class="message error hidden">
+                Não foi possível carregar os alunos.
+            </div>
+
+            <div id="empty" class="message hidden">
+                Nenhum aluno encontrado.
+            </div>
+
+            <div class="table-wrapper">
+                <table id="tabelaAlunos">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Data de nascimento</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="alunosBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button id="paginaAnterior">
+                    Anterior
+                </button>
+
+                <span id="paginaAtual">
+                    Página 1
+                </span>
+
+                <button id="proximaPagina">
+                    Próxima
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/Scripts/dashboard.js"></script>
+
+</body>
+</html>

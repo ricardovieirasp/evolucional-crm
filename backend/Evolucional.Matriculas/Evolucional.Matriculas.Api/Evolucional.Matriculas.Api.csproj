@@ -173,7 +173,10 @@
     <Compile Include="Services\TurmaService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\dashboard.css" />
     <Content Include="Global.asax" />
+    <Content Include="index.html" />
+    <Content Include="Scripts\dashboard.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
